@@ -1,0 +1,22 @@
+# Используем официальный образ NVIDIA с поддержкой CUDA и Cudnn
+FROM nvidia/cuda:12.1.0-base-ubuntu22.04
+
+# Установка Python и системных зависимостей
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    libgl1 \
+    libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Копируем зависимости и устанавливаем их
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Копируем исходный код
+COPY src/ .
+
+# Команда по умолчанию (запуск обучения или сервера)
+CMD ["python3", "src/train.py"]
