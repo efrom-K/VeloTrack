@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torchvision
 from torchvision import models
 
 class VeloTrackDetector(nn.Module):

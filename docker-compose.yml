@@ -6,6 +6,8 @@ services:
     volumes:
       - ./backend:/app
       - ./weights:/app/weights
+      - ./data:/app/data
+    shm_size: '2gb'
     deploy:
       resources:
         reservations:
@@ -15,6 +17,7 @@ services:
               capabilities: [gpu]
     networks:
       - velo-network
+    user: "root"
 
   frontend:
     build:
@@ -24,6 +27,7 @@ services:
       - "8501:8501"
     volumes:
       - ./frontend:/app
+      - ./weights:/app/weights
     deploy:
       resources:
         reservations:
